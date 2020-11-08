@@ -1,0 +1,16 @@
+FROM python:3.7-slim
+EXPOSE 5000
+WORKDIR /app
+
+RUN pip install "poetry==1.0.0" && poetry config virtualenvs.create false
+
+COPY ./pyproject.toml .
+COPY ./README.md .
+
+RUN poetry install --no-interaction --no-root
+
+COPY ./santaServer ./santaServer
+
+RUN poetry install --no-interaction --no-ansi
+
+ENTRYPOINT ["python3", "-m", "santaServer"]

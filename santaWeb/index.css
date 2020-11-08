@@ -1,0 +1,61 @@
+.footer {
+	width: 100%;
+	background-color: #f5f5f5;
+}
+
+.psImg {
+	height: 4em;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.stationDD {
+	overflow-y: scroll;
+	height: 60vh;
+}
+
+.progress {
+	height: 7px;
+	border-radius: initial;
+}
+
+.tramTimeModalA {
+	color: #000000 !important;
+	text-decoration: none;
+}
+
+.tr0 {
+	border: 0 !important;
+}
+
+.td0 {
+	padding: 0 !important;
+	border: 0 !important;
+}
+
+.table-bordered tbody tr {
+	border: 1px solid gray;
+	border-color: gray;
+}
+
+.table-bordered tbody tr td {
+	border: 1px solid gray;
+	border-color: gray;
+}
+
+.table-bordered tbody tr th {
+	border: 1px solid gray;
+	border-color: gray;
+}
+
+.table-bordered thead tr {
+	border: 1px solid gray;
+	border-color: gray;
+}
+
+.table-bordered thead tr th {
+	border: 1px solid gray;
+	border-color: gray;
+}
