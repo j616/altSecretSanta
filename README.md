@@ -6,42 +6,14 @@ At my workplace, we have a yearly tradition of two Secret Santas. A traditional 
 
 Each player has a folder containing a photo of their present when wrapped, a photo of their present when opened, and a config file with their name, a short description of their present, and a longer description to be read out by the host on opening. Two web pages are provided. One intended to be shown over zoom shows pictures of the presents initially wrapped, and then un-wrapped with their short description and the name of the current owner as they are opened. The second interface is for use behind the scenes by the host. It provides a means to randomly pick a name, for assigning presents, for showing who's turn to open/steal it currently is, and for prompting with the long present description.
 
-## Installation
+## Run locally
 
-### Install using docker
-
-A docker image for this package is available on [Docker Hub](https://hub.docker.com/r/j616s/metrolinktimes).
-
-### Install from source
-
-The following is used to install install in a venv for testing.
-
-Install pyenv
+In the project root, run:-
 ```bash
-curl https://pyenv.run | bash
+docker-compose -f docker/docker-compose.yml up
 ```
 
-Install Python 3.7
+If you re-pull or update the code, you'll want to run this first:-
 ```bash
-pyenv install 3.7.7
-```
-After installing, it may suggest to add initialization code to `~/.bashrc`. Do that.
-
-Install Poetry
-```bash
-pip3 install --user poetry
-```
-
-Configure and install the environment used for this project.
-__Run in the root of the cloned directory__
-```bash
-pyenv local 3.7.7
-poetry install
-```
-
-During development, you need to have your environment activated. When it is activated, your terminal prompt is prefixed with (.venv).
-
-Visual Studio code with suggested settings does this automatically whenever you open a .py file. If you prefer using a different editor, you can do it manually by running:
-```bash
-poetry shell
+docker-compose -f docker/docker-compose.yml build
 ```
