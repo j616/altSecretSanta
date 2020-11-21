@@ -13,6 +13,7 @@ santaServer = "santaServer.__main__:main"
 [tool.poetry.dependencies]
 python = ">=3.7"
 poetry = "^1.0.5"
+tornado = "^6.0.4"
 
 [tool.poetry.dev-dependencies]
 pytest-flake8 = "^1.0.4"
