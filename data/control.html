@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="index.css" rel="stylesheet">
+
+    <title>Alternative Secret Santa</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand mb-0 h1" href="#">Alternative Secret Santa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index.html">Presents</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/control.html">Control <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div id="alerts"></div>
+
+      <div class="container my-3 p-0">
+        <div class="row">
+          <div class="col-auto">
+            <button class="btn btn-outline-dark btn-lg" type="submit" id="randPerson" disabled>Random Person Without Pres</button>
+          </div>
+          <div class="col-auto mr-auto">
+            <div class="btn-group">
+              <button class="btn btn-dark btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="personDDB" value=null>
+                Select person
+              </button>
+              <div class="dropdown-menu personDD" id="personDD" boundary="window">
+                <a class="dropdown-item" href="#Joe Bloggs">Joe Bloggs (no pres)</a>
+                <a class="dropdown-item" href="#Sam Smith">Sam Smith</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto mr-auto">
+            <div class="btn-group">
+              <button class="btn btn-dark btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="presDDB" value=null>
+                Select present
+              </button>
+              <div class="dropdown-menu presDD" id="presDD" boundary="window">
+                <a class="dropdown-item" href="#1">1</a>
+                <a class="dropdown-item" href="#2">2 - Present B (Sam Smith)</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-dark btn-lg" type="submit" id="assignB" disabled>Assign</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">2 - Pres B</h4>
+          <h5 class="card-title">Short Description</h5>
+          <p class="card-text">Short present desc</p>
+
+          <h5 class="card-title">Long Description</h5>
+          <p class="card-text">Enjoy yourself with this long description of pressent B!</p>
+          <img src="https://placekitten.com/300/200">
+          <img src="https://placekitten.com/300/201">
+        </div>
+      </div>
+
+      <footer class="footer p-3">
+        <div class="d-flex flex-wrap-reverse justify-content-between">
+          <div class="p-2">© James Sandford 2020</div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="./santa.js"></script>
+  </body>
+</html>

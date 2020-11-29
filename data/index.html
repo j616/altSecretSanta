@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="index.css" rel="stylesheet">
 
     <title>Alternative Secret Santa</title>
@@ -20,10 +20,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#">Presents <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/about.html">About</a>
+              <a class="nav-link" href="/control.html">Control</a>
             </li>
           </ul>
         </div>
@@ -31,17 +31,86 @@
 
       <div id="alerts"></div>
 
-      <table class="table table-striped table-dark table-bordered d-none" id="presents">
-        <thead>
-          <tr>
-            <th scope="col">1</th>
-            <th scope="col">2</th>
-            <th scope="col">3</th>
-            <th scope="col">4</th>
-            <th scope="col">5</th>
-          </tr>
-        </thead>
-        <tbody id="predBody">
+      <table class="table table-light table-bordered table-striped" id="presents">
+        <tbody id="presBody">
+          <div id="row-1">
+            <tr>
+              <td style="width: 20%">
+                1
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+              <td style="width: 20%">
+                2 - Pres B
+                <img src="https://placekitten.com/300/200"width="100%" >
+                Sam Bloggs
+              </td>
+              <td style="width: 20%">
+                3
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+              <td style="width: 20%">
+                4 - Pres D
+                <img src="https://placekitten.com/300/200"width="100%" >
+                Joe Smith
+              </td>
+              <td style="width: 20%">
+                5
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+            </tr>
+          </div>
+          <div id="row-2">
+            <tr>
+              <td style="width: 20%">
+                6
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+              <td style="width: 20%">
+                7 - Pres B
+                <img src="https://placekitten.com/300/200"width="100%" >
+                Sam Bloggs
+              </td>
+              <td style="width: 20%">
+                8
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+              <td style="width: 20%">
+                9 - Pres D
+                <img src="https://placekitten.com/300/200"width="100%" >
+                Joe Smith
+              </td>
+              <td style="width: 20%">
+                10
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+            </tr>
+          </div>
+          <div id="row-3">
+            <tr>
+              <td style="width: 20%">
+                11
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+              <td style="width: 20%">
+                12 - Pres B
+                <img src="https://placekitten.com/300/200"width="100%" >
+                Sam Bloggs
+              </td>
+              <td style="width: 20%">
+                13
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+              <td style="width: 20%">
+                14 - Pres D
+                <img src="https://placekitten.com/300/200"width="100%" >
+                Joe Smith
+              </td>
+              <td style="width: 20%">
+                15
+                <img src="https://placekitten.com/300/201"width="100%" >
+              </td>
+            </tr>
+          </div>
         </tbody>
       </table>
 
@@ -54,7 +123,7 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="./santa.js"></script>
   </body>
 </html>
