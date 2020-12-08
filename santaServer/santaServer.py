@@ -9,22 +9,17 @@ import pickle
 import tornado.websocket
 from tornado.web import RequestHandler
 from tornado.ioloop import IOLoop
+from tornado.escape import json_decode
 
 PORT = 80
 
 logFormat = '%(asctime)s %(levelname)s %(pathname)s %(lineno)s %(message)s'
 logLevel = logging.ERROR
-logFile = '/var/log/sanataServer/sanataServer.log'
 
-if path.isdir(path.dirname(logFile)):
-    logging.basicConfig(filename=logFile,
-                        format=logFormat,
-                        level=logLevel)
-else:
-    logging.basicConfig(format=logFormat,
-                        level=logLevel)
+logging.basicConfig(format=logFormat,
+                    level=logLevel)
 dataDir = "/etc/data"
-stateFile = f"{dataDir}state.txt"
+stateFile = f"{dataDir}/state.txt"
 infoName = "info.json"
 picExts = [".jpg", ".jpeg", ".png"]
 wrappedNames = [f"wrapped{e}" for e in picExts]
@@ -57,6 +52,7 @@ class Game():
         self.players = {}
         self.sockets = []
         self.nextPlayer = None
+        self.prevPlayer = None
 
         if path.isfile(stateFile):
             self.loadState()
@@ -95,13 +91,26 @@ class Game():
             self.presents[p]["unwrapped"] = unwrappedName(pDir, p)
 
     def assignOwner(self, present, owner):
+        if present not in self.presents:
+            logging.error(f"{present} not in {self.presents}")
+            return
+        if owner not in self.players:
+            logging.error(f"{owner} not in {self.players}")
+            return
+
         oldOwner = self.presents[present]["owner"]
         self.presents[present]["owner"] = owner
         self.nextPlayer = oldOwner
+        self.prevPlayer = owner
 
         self.saveState()
 
-        return {'oldOwner': self.players[oldOwner]}
+        ret = {"oldOwner": None}
+
+        if oldOwner is not None:
+            ret["oldOwner"] = self.players[oldOwner]
+
+        return ret
 
     def playersFromNumbers(self, numList):
         return {p: self.players[p] for p in self.players
@@ -133,11 +142,20 @@ class Game():
 
         return self.nextPlayer
 
+    def getPresFromPlayer(self, player):
+        if player is None:
+            return None
+        for p in self.presents:
+            if self.presents[p]["owner"] == player:
+                return p
+        return None
+
     def saveState(self):
         state = {
             "players": self.players,
             "presents": self.presents,
-            "nextPlayer": self.nextPlayer
+            "nextPlayer": self.nextPlayer,
+            "prevPlayer": self.prevPlayer
         }
         with open(stateFile, "wb") as f:
             pickle.dump(state, f)
@@ -148,14 +166,20 @@ class Game():
             self.players = d["players"]
             self.presents = d["presents"]
             self.nextPlayer = d["nextPlayer"]
+            self.prevPlayer = d["prevPlayer"]
 
-    def wsSendState(self):
-        state = {
+    def formatState(self):
+        return {
             "playersPresents": self.playersWithPresents,
             "playersNoPresents": self.playersWithoutPresents,
             "presents": self.presents,
-            "nextPlayer": self.nextPlayer
+            "nextPlayer": self.nextPlayer,
+            "prevPlayer": self.prevPlayer,
+            "prevPresent": self.getPresFromPlayer(self.prevPlayer)
         }
+
+    def wsSendState(self):
+        state = self.formatState()
         for s in self.sockets:
             s.write_message(state)
 
@@ -166,11 +190,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         self.game.sockets.append(self)
-        print('new connection')
+        self.write_message(self.game.formatState())
+        logging.info('ws new connection')
 
     def on_close(self):
         self.game.sockets.remove(self)
-        print('connection closed')
+        logging.info('ws connection closed')
 
 
 class BaseHandler(RequestHandler):
@@ -180,25 +205,21 @@ class BaseHandler(RequestHandler):
 
 class NextPlayerHandler(BaseHandler):
     def get(self):
-        self.game.wsSendState()
         self.write(self.game.getNextPlayer())
+        self.game.wsSendState()
 
 
 class SetPresentHandler(BaseHandler):
     def put(self, present):
-        oldOwner = self.game.assignOwner(present, self.request.body)
-        self.write(oldOwner)
+        oldOwner = self.game.assignOwner(
+            present, str(json_decode(self.request.body)))
+        self.write(str(oldOwner))
+        self.game.wsSendState()
 
 
 class Application():
     def run(self):
         self.game = Game()
-
-        print(self.game.presents)
-        print(self.game.players)
-        print(self.game.playersWithPresents)
-        print(self.game.playersWithoutPresents)
-        print(self.game.randomPlayerWithoutPres())
 
         handlerArgs = {"game": self.game}
 
@@ -210,13 +231,21 @@ class Application():
             (r'/ws/?', WSHandler, handlerArgs),
             (r'/nextPlayer/?', NextPlayerHandler, handlerArgs),
             (r'/pres/([^/]*)/?', SetPresentHandler, handlerArgs),
+            (r"/pres/pics/([^/]*/[^/]*\.jpg)", tornado.web.StaticFileHandler,
+             dict(path=settings['static_path'])),
+            (r"/pres/pics/([^/]*/[^/]*\.jpeg)", tornado.web.StaticFileHandler,
+             dict(path=settings['static_path'])),
+            (r"/pres/pics/([^/]*/[^/]*\.png)", tornado.web.StaticFileHandler,
+             dict(path=settings['static_path'])),
             (r"/(index\.html)", tornado.web.StaticFileHandler,
              dict(path=settings['static_path'])),
             (r"/(control\.html)", tornado.web.StaticFileHandler,
              dict(path=settings['static_path'])),
             (r"/(index\.css)", tornado.web.StaticFileHandler,
              dict(path=settings['static_path'])),
-            (r"/(santa\.js)", tornado.web.StaticFileHandler,
+            (r"/(index\.js)", tornado.web.StaticFileHandler,
+             dict(path=settings['static_path'])),
+            (r"/(control\.js)", tornado.web.StaticFileHandler,
              dict(path=settings['static_path'])),
         ], **settings)
 

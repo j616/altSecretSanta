@@ -5,3 +5,4 @@ build
 dist/
 docker/dist/
 docker/requirements.txt
+data/state.txt

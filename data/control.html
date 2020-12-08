@@ -29,51 +29,40 @@
         </div>
       </nav>
 
-      <div id="alerts"></div>
-
       <div class="container my-3 p-0">
         <div class="row">
           <div class="col-auto">
-            <button class="btn btn-outline-dark btn-lg" type="submit" id="randPerson" disabled>Random Person Without Pres</button>
+            <button class="btn btn-outline-dark btn-lg" type="submit" id="randPerson">Random Person Without Pres</button>
           </div>
+
           <div class="col-auto mr-auto">
             <div class="btn-group">
               <button class="btn btn-dark btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="personDDB" value=null>
                 Select person
               </button>
               <div class="dropdown-menu personDD" id="personDD" boundary="window">
-                <a class="dropdown-item" href="#Joe Bloggs">Joe Bloggs (no pres)</a>
-                <a class="dropdown-item" href="#Sam Smith">Sam Smith</a>
               </div>
             </div>
           </div>
+
           <div class="col-auto mr-auto">
             <div class="btn-group">
               <button class="btn btn-dark btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="presDDB" value=null>
                 Select present
               </button>
               <div class="dropdown-menu presDD" id="presDD" boundary="window">
-                <a class="dropdown-item" href="#1">1</a>
-                <a class="dropdown-item" href="#2">2 - Present B (Sam Smith)</a>
               </div>
             </div>
           </div>
+
           <div class="col-auto">
-            <button class="btn btn-outline-dark btn-lg" type="submit" id="assignB" disabled>Assign</button>
+            <button class="btn btn-outline-dark btn-lg" type="submit" id="assignB">Assign</button>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">2 - Pres B</h4>
-          <h5 class="card-title">Short Description</h5>
-          <p class="card-text">Short present desc</p>
-
-          <h5 class="card-title">Long Description</h5>
-          <p class="card-text">Enjoy yourself with this long description of pressent B!</p>
-          <img src="https://placekitten.com/300/200">
-          <img src="https://placekitten.com/300/201">
+        <div class="card-body" id="presInfo">
         </div>
       </div>
 
@@ -87,6 +76,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="./santa.js"></script>
+    <script src="./control.js"></script>
   </body>
 </html>
