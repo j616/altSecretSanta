@@ -60,6 +60,8 @@ class Game():
         dirCont = listdir(dataDir)
 
         for name in dirCont:
+            if not name.isdigit():
+                continue
             fullPath = path.join(dataDir, name)
             if path.isdir(fullPath):
                 # if not in loaded state
