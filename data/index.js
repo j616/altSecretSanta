@@ -3,6 +3,7 @@ $(function() {
     const apiPresBase = "http://" + window.location.host + "/pres/pics/";
     const socket = new WebSocket(apiWS);
     const table = $("#presBody");
+    const MAX_COLUMNS = 4;
 
     socket.addEventListener('message', function (event) {
         processData(JSON.parse(event.data));
@@ -56,7 +57,7 @@ $(function() {
 
             thisTR.push(formatTR(desc, picture, ownerName));
 
-            if (thisTR.length == 5) {
+            if (thisTR.length == MAX_COLUMNS) {
                 appendTR(thisTR)
                 thisTR = [];
             }
@@ -80,7 +81,8 @@ $(function() {
             $("<div/>").text(desc),
             $("<img>", {
                 src: pic,
-                width: "100%"
+                width: "100%",
+                style: "max-height:280px"
                 }),
             $("<div/>").text(owner)
             ]);

@@ -5,6 +5,7 @@ $(function() {
     const socket = new WebSocket(apiWS);
     var players = {};
     var playersNoPres = {};
+    var allPlayers = {};
     var presents = {};
     var nextPlayer = null;
 
@@ -23,9 +24,19 @@ $(function() {
     function processData(data) {
         players = data["playersPresents"];
         playersNoPres = data["playersNoPresents"];
+        allPlayers = { ...players, ...playersNoPres };
         presents = data["presents"];
         nextPlayer = data["nextPlayer"];
 
+        setPlayersDD();
+        setPresentDD();
+
+        if (nextPlayer != null) {
+            selectPlayer(nextPlayer);
+        }
+    }
+
+    function setPlayersDD() {
         $("#personDD").empty();
 
         $("#personDD").append([
@@ -34,19 +45,7 @@ $(function() {
                 }).text("Players with presents")
             ])
 
-        for (const player in players) {
-            const id = "pers" + player;
-            $("#personDD").append([
-                $("<button/>", {
-                    class: "dropdown-item",
-                    type: "button",
-                    id: id
-                    }).text(players[player]["name"])
-                ]);
-            $("#" + id).on("click", function() {
-                selectPlayer(player);
-            });
-        }
+        appendPlayers(players, "");
 
         $("#personDD").append([
             $("<div/>", {
@@ -57,20 +56,26 @@ $(function() {
                 }).text("Players without presents")
             ]);
 
-        for (const player in playersNoPres) {
+        appendPlayers(playersNoPres, " (no pres)");
+    }
+
+    function appendPlayers(thisPlayers, suffix) {
+        for (const player in thisPlayers) {
             const id = "pers" + player;
             $("#personDD").append([
                 $("<button/>", {
                     class: "dropdown-item",
                     type: "button",
                     id: id
-                    }).text(playersNoPres[player]["name"] + " (no pres)")
+                    }).text(thisPlayers[player]["name"] + suffix)
                 ]);
             $("#" + id).on("click", function() {
                 selectPlayer(player);
             });
         }
+    }
 
+    function setPresentDD() {
         $("#presDD").empty()
 
         for (const pres in presents) {
@@ -96,44 +101,32 @@ $(function() {
                 selectPres(pres);
             });
         }
-
-        if (nextPlayer != null) {
-            selectPlayer(nextPlayer);
-        }
     }
 
     function selectPlayer(player) {
-        console.log(player);
-
         let playerName;
 
         if (player in playersNoPres) {
-            playerName = playersNoPres[player]["name"] + " (no pres)";
+            setPersonDDB(player, " (no pres)");
         } else {
-            playerName = players[player]["name"];
+            setPersonDDB(player, "");
         }
+    }
+
+    function setPersonDDB(player, suffix) {
+        var playerName = allPlayers[player]["name"] + suffix;
 
         $("#personDDB").text(playerName);
         $("#personDDB").val(player);
     }
 
     function selectPres(pres) {
-        console.log(pres);
         const pictureBase = apiPresBase + pres + "/";
-
         const owner = presents[pres]["owner"];
-        var presName = pres
 
-        if (owner != null) {
-            ownerName = players[owner]["name"];
-            presName = presName + " - " + presents[pres]["short"];
-            presName = presName + " (" + ownerName + ")";
-        }
+        setPresDDBName(pres, owner);
 
-        $("#presDDB").text(presName);
-        $("#presDDB").val(pres);
         $("#presInfo").empty();
-
         $("#presInfo").append([
             $("<h4/>", {class: "card-title"}).text(
                 pres + " - " + presents[pres]["short"]
@@ -152,6 +145,19 @@ $(function() {
             ])
     }
 
+    function setPresDDBName(pres, owner) {
+        var presName = pres
+
+        if (owner != null) {
+            ownerName = allPlayers[owner]["name"];
+            presName = presName + " - " + presents[pres]["short"];
+            presName = presName + " (" + ownerName + ")";
+        }
+
+        $("#presDDB").text(presName);
+        $("#presDDB").val(pres);
+    }
+
     function randPerson(){
         fetch(apiBase + "nextPlayer/");
     }
@@ -167,5 +173,8 @@ $(function() {
         fetch(apiBase + "pres/" + pres + "/", {
             method: "put",
             body: person});
+
+        setPresDDBName(pres, parseInt(person));
+        setPersonDDB(person, "");
     }
 });

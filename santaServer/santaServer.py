@@ -207,8 +207,10 @@ class BaseHandler(RequestHandler):
 
 class NextPlayerHandler(BaseHandler):
     def get(self):
-        self.write(self.game.getNextPlayer())
-        self.game.wsSendState()
+        nextPlayer = self.game.getNextPlayer()
+        if nextPlayer is not None:
+            self.write(self.game.getNextPlayer())
+            self.game.wsSendState()
 
 
 class SetPresentHandler(BaseHandler):
