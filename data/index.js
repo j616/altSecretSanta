@@ -3,7 +3,7 @@ $(function() {
     const apiPresBase = "http://" + window.location.host + "/pres/pics/";
     const socket = new WebSocket(apiWS);
     const table = $("#presBody");
-    const MAX_COLUMNS = 4;
+    const MAX_COLUMNS = 5;
 
     socket.addEventListener('message', function (event) {
         processData(JSON.parse(event.data));
@@ -82,7 +82,7 @@ $(function() {
             $("<img>", {
                 src: pic,
                 width: "100%",
-                style: "max-height:280px"
+                style: "max-height:200px"
                 }),
             $("<div/>").text(owner)
             ]);

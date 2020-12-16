@@ -101,6 +101,14 @@ class Game():
             return
 
         oldOwner = self.presents[present]["owner"]
+
+        # Protect against re-assigning giving a person multiple presents
+        while True:
+            p = self.getPresFromPlayer(owner)
+            if p is None:
+                break
+            self.presents[p]["owner"] = None
+
         self.presents[present]["owner"] = owner
         self.nextPlayer = oldOwner
         self.prevPlayer = owner
